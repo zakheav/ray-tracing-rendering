@@ -1,0 +1,320 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <script src="jquery-2.1.3.min.js"></script>
+        <script type="text/javascript" src="bootstrap-3.2.0-dist/js/bootstrap.min.js"></script>
+        <link href="bootstrap-3.2.0-dist/css/bootstrap.min.css" rel="stylesheet">
+    </head>
+    <body>
+    <br/>
+    <div class="row">
+        <div class="col-lg-6">
+            <div style="width:400px; margin:auto">
+                <canvas id="mycanvas" width=400 height=400>
+                </canvas>
+                <div class="row"><!--物件移动控制-->
+                    <div class="col-md-12">
+                        <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-primary glyphicon glyphicon-arrow-up" onclick="moveUp()"></button>
+                            </div>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-primary glyphicon glyphicon-arrow-down" onclick="moveDown()"></button>
+                            </div>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-primary glyphicon glyphicon-arrow-left" onclick="moveLeft()"></button>
+                            </div>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-primary glyphicon glyphicon-arrow-right" onclick="moveRight()"></button>
+                            </div>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-primary glyphicon glyphicon-zoom-in" onclick="moveForward()"></button>
+                            </div>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-primary glyphicon glyphicon-zoom-out" onclick="moveBehind()"></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row"><!--物件编辑-->
+                    <div class="col-md-12">
+                        <button class="btn btn-primary glyphicon glyphicon-plus btn-block" onclick="show_object_panel()"></button>
+                    </div>
+                </div>
+                <div class="row"><!--物件选择-->
+                    <div class="col-md-12" id="object_selector">
+                    </div>
+                </div>
+
+                <div class="row"><!--光源移动-->
+                    <div class="col-md-12">
+                        <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-warning glyphicon glyphicon-arrow-up" onclick="light_moveUp()"></button>
+                            </div>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-warning glyphicon glyphicon-arrow-down" onclick="light_moveDown()"></button>
+                            </div>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-warning glyphicon glyphicon-arrow-left" onclick="light_moveLeft()"></button>
+                            </div>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-warning glyphicon glyphicon-arrow-right" onclick="light_moveRight()"></button>
+                            </div>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-warning glyphicon glyphicon-zoom-in" onclick="light_moveForward()"></button>
+                            </div>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-warning glyphicon glyphicon-zoom-out" onclick="light_moveBehind()"></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row"><!--光源编辑-->
+                    <div class="col-md-12">
+                        <button class="btn btn-warning glyphicon glyphicon-plus btn-block" onclick="show_light_panel()"></button>
+                    </div>
+                </div>
+                <div class="row"><!--光源选择-->
+                    <div class="col-md-12" id="light_selector">
+                    </div>
+                </div>
+
+                <div class="row"><!--相机移动控制-->
+                    <div class="col-md-12">
+                        <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                            <div class="btn-group" role="group">
+                                <button id="cam_rollup" class="btn btn-success glyphicon glyphicon-chevron-up" onclick="cam_rollUp()"></button>
+                            </div>
+                            <div class="btn-group" role="group">
+                                <button id="cam_rolldown" class="btn btn-success glyphicon glyphicon-chevron-down" onclick="cam_rollDown()"></button>
+                            </div>
+                            <div class="btn-group" role="group">
+                                <button id="cam_rollright" class="btn btn-success glyphicon glyphicon-chevron-left" onclick="cam_rollRight()"></button>
+                            </div>
+                            <div class="btn-group" role="group">
+                                <button id="cam_rol_left" class="btn btn-success glyphicon glyphicon-chevron-right" onclick="cam_rollLeft()"></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div id="light_controll_panel" style="width:400px; margin:auto; display: none"><!--光源菜单-->
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <input type="number" class="form-control" id="light_x" name="light_x" placeholder="x坐标" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <input type="number" class="form-control" id="light_y" name="light_y" placeholder="y坐标" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <input type="number" class="form-control" id="light_z" name="light_z" placeholder="z坐标" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <input type="number" class="form-control" id="light_range" name="light_range" placeholder="光强" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <button type="button" class="btn btn-primary btn-block glyphicon glyphicon-ok" id="add_Light_confirm" onclick="addLight()"></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div id="object_controll_panel" style="width:400px; margin:auto; display: none"><!--物件菜单-->
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <input type="number" class="form-control" id="x" name="x" placeholder="x坐标" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <input type="number" class="form-control" id="y" name="y" placeholder="y坐标" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <input type="number" class="form-control" id="z" name="z" placeholder="z坐标" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <input type="number" class="form-control" id="r" name="r" placeholder="半径" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <input type="number" class="form-control" id="diffuse" name="diffuse" placeholder="光滑程度" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-4">
+                            <input type="number" class="form-control" id="Red" name="R" placeholder="红色系数（0-1）" required="required">
+                        </div>
+                        <div class="col-xs-4">
+                            <input type="number" class="form-control" id="Green" name="G" placeholder="绿色系数（0-1）" required="required">
+                        </div>
+                        <div class="col-xs-4">
+                            <input type="number" class="form-control" id="Blue" name="B" placeholder="蓝色系数（0-1）" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <button type="button" class="btn btn-primary btn-block glyphicon glyphicon-ok" id="add_confirm" onclick="addObject()"></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </body>
+    <script src="basicClass.js"></script>
+    <script src="objectClass.js"></script>
+    <script src="sceneClass.js"></script>
+    <script src="cameraClass.js"></script>
+    <script>
+        var cam = new camera( 600,200,200 );
+
+        var real_space = new scene();//初始化实际空间
+        real_space.Bulbs.addBulb(0,200,800,255);//打开一个灯光
+        $("#light_selector").append("<button class='lightChoose btn btn-warning' onclick='getLightId("+real_space.Bulbs.bulbNum+")'>"+real_space.Bulbs.bulbNum+"</button>");
+        //real_space.addObj(0,200,320,70);//添加一个球体
+        //real_space.addObj(0,200,0,200);
+        //real_space.addObj(100,500,0,50);
+        //real_space.addObj(200,200,0,50);
+        real_space.rayCasting(cam.cam, cam.screen);//渲染
+
+
+        //**************************************************************************************************************
+        //光源控制
+        var lightId = 0;
+        function show_light_panel(){
+            $("#light_controll_panel").show(200);
+        }
+        function addLight(){
+            var x = Number($("#light_x").val());
+            var y = Number($("#light_y").val());
+            var z = Number($("#light_z").val());
+            var range = Number($("#light_range").val());
+            real_space.Bulbs.addBulb(x,y,z,range);//打开一个灯光
+            $("#light_selector").append("<button class='lightChoose btn btn-warning' onclick='getLightId("+real_space.Bulbs.bulbNum+")'>"+real_space.Bulbs.bulbNum+"</button>");
+            $("#light_controll_panel").hide(200);
+            real_space.rayCasting(cam.cam, cam.screen);//渲染
+        }
+        function getLightId(num){
+            lightId = num-1;
+        }
+        function light_moveUp(){
+            real_space.Bulbs.Bulb[lightId].move(0,0,50);
+            real_space.rayCasting(cam.cam, cam.screen);
+        }
+        function light_moveDown(){
+            real_space.Bulbs.Bulb[lightId].move(0,0,-50);
+            real_space.rayCasting(cam.cam, cam.screen);
+        }
+        function light_moveLeft(){
+            real_space.Bulbs.Bulb[lightId].move(0,-50,0);
+            real_space.rayCasting(cam.cam, cam.screen);
+        }
+        function light_moveRight(){
+            real_space.Bulbs.Bulb[lightId].move(0,50,0);
+            real_space.rayCasting(cam.cam, cam.screen);
+        }
+        function light_moveForward(){
+            real_space.Bulbs.Bulb[lightId].move(50,0,0);
+            real_space.rayCasting(cam.cam, cam.screen);
+        }
+        function light_moveBehind(){
+            real_space.Bulbs.Bulb[lightId].move(-50,0,0);
+            real_space.rayCasting(cam.cam, cam.screen);
+        }
+
+        //**************************************************************************************************************
+        //物品控制
+        var objectId = -1;
+        function show_object_panel(){
+            $("#object_controll_panel").show(200);
+        }
+        function addObject(){
+            var x = Number($("#x").val());
+            var y = Number($("#y").val());
+            var z = Number($("#z").val());
+            var r = Number($("#r").val());
+            var diffuse = Number($("#diffuse").val());
+            var red = Number($("#Red").val()), blue = Number($("#Blue").val()), green = Number($("#Green").val());
+
+            real_space.addObj(x,y,z,r,diffuse,red,green,blue);
+            $("#object_selector").append("<button class='objChoose btn btn-primary' onclick='getObjId("+real_space.num+")'>"+real_space.num+"</button>");
+            $("#object_controll_panel").hide(200);
+            real_space.rayCasting(cam.cam, cam.screen);//渲染
+        }
+        function getObjId(num){
+            objectId = num-1;
+        }
+        function moveUp(){
+            if(objectId>=0){
+                real_space.objects[objectId].movePosition(0,0,30);
+                real_space.rayCasting(cam.cam, cam.screen);//渲染
+            }
+        }
+        function moveDown(){
+            if(objectId>=0){
+                real_space.objects[objectId].movePosition(0,0,-30);
+                real_space.rayCasting(cam.cam, cam.screen);//渲染
+            }
+        }
+        function moveRight(){
+            if(objectId>=0){
+                real_space.objects[objectId].movePosition(0,30,0);
+                real_space.rayCasting(cam.cam, cam.screen);//渲染
+            }
+        }
+        function moveLeft(){
+            if(objectId>=0){
+                real_space.objects[objectId].movePosition(0,-30,0);
+                real_space.rayCasting(cam.cam, cam.screen);//渲染
+            }
+        }
+        function moveForward(){
+            if(objectId>=0){
+                real_space.objects[objectId].movePosition(30,0,0);
+                real_space.rayCasting(cam.cam, cam.screen);//渲染
+            }
+        }
+        function moveBehind(){
+            if(objectId>=0){
+                real_space.objects[objectId].movePosition(-30,0,0);
+                real_space.rayCasting(cam.cam, cam.screen);//渲染
+            }
+        }
+
+        //照相机控制
+        function cam_rollUp(){
+            cam.changePostion(1);
+            real_space.rayCasting(cam.cam, cam.screen);//渲染
+        }
+        function cam_rollDown(){
+            cam.changePostion(2);
+            real_space.rayCasting(cam.cam, cam.screen);//渲染
+        }
+        function cam_rollLeft(){
+            cam.changePostion(3);
+            real_space.rayCasting(cam.cam, cam.screen);//渲染
+        }
+        function cam_rollRight(){
+            cam.changePostion(4);
+            real_space.rayCasting(cam.cam, cam.screen);//渲染
+        }
+    </script>
+
+</html>
